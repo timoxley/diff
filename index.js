@@ -337,6 +337,4 @@ var JsDiff = (function() {
   };
 })();
 
-if (typeof module !== "undefined") {
-    module.exports = JsDiff;
-}
+module.exports = JsDiff;

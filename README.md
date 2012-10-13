@@ -1,43 +1,41 @@
-# jsdiff
+# diff
 
-[![Build Status](https://secure.travis-ci.org/kpdecker/jsdiff.png)](http://travis-ci.org/kpdecker/jsdiff)
+[![Build
+Status](https://secure.travis-ci.org/timoxley/jsdiff.png)](http://travis-ci.org/timoxley/jsdiff)
 
-A javascript text differencing implementation.
+A text differencing component.
 
 Based on the algorithm proposed in
 ["An O(ND) Difference Algorithm and its Variations" (Myers, 1986)](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.4.6927).
 
 ## Installation
 
-    npm install diff
+    component install timoxley/diff
 
-or
-
-    git clone git://github.com/kpdecker/jsdiff.git
 
 ## API
 
-* JsDiff.diffChars(oldStr, newStr)
+* diff.diffChars(oldStr, newStr)
     Diffs two blocks of text, comparing character by character.
 
     Returns a list of change objects (See below).
 
-* JsDiff.diffWords(oldStr, newStr)
+* diff.diffWords(oldStr, newStr)
     Diffs two blocks of text, comparing word by word.
 
     Returns a list of change objects (See below).
 
-* JsDiff.diffLines(oldStr, newStr)
+* diff.diffLines(oldStr, newStr)
     Diffs two blocks of text, comparing line by line.
 
     Returns a list of change objects (See below).
 
-* JsDiff.diffCss(oldStr, newStr)
+* diff.diffCss(oldStr, newStr)
     Diffs two blocks of text, comparing CSS tokens.
 
     Returns a list of change objects (See below).
 
-* JsDiff.createPatch(fileName, oldStr, newStr, oldHeader, newHeader)
+* diff.createPatch(fileName, oldStr, newStr, oldHeader, newHeader)
     Creates a unified diff patch.
 
     Parameters:
@@ -64,8 +62,10 @@ Many of the methods above return change objects. These objects are consist of th
 
 Note that some cases may omit a particular flag field. Comparison on the flag fields should always be done in a truthy or falsy manner.
 
-## [Example](http://kpdecker.github.com/jsdiff)
+## Credits
 
+Original JSDiff: [Kevin Decker](https://github.com/kpdecker/jsdiff)
+applyPatch Implementation: [vprimachenko](https://github.com/vprimachenko/jsdiff)
 ## License
 
 Software License Agreement (BSD License)

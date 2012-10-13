@@ -1,0 +1,12 @@
+{
+  "name": "diff",
+  "repo": "timoxley/diff",
+  "description": "Text diff",
+  "version": "1.0.4",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "scripts": [
+    "index.js"
+  ]
+}
