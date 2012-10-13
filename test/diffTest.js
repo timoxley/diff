@@ -1,4 +1,4 @@
-const VERBOSE = false;
+var VERBOSE = false;
 
 var assert = require('assert'),
     diff = require('../diff');
@@ -7,8 +7,8 @@ function log() {
   VERBOSE && console.log.apply(console, arguments);
 }
 
-exports['Whitespace diff'] = function() {
-    diffResult = diff.diffWords("New Value", "New  ValueMoreData");
+it('Whitespace diff', function() {
+    var diffResult = diff.diffWords("New Value", "New  ValueMoreData");
     assert.equal(
         "New  <ins>ValueMoreData</ins><del>Value</del>",
         diff.convertChangesToXML(diffResult),
@@ -19,11 +19,11 @@ exports['Whitespace diff'] = function() {
         "New  <ins>ValueMoreData</ins><del>Value</del> ",
         diff.convertChangesToXML(diffResult),
         "Multiple whitespace diffResult Value");
-};
+});
 
 // Diff on word boundary
-exports['Word Diff'] = function() {
-  diffResult = diff.diffWords("New :Value:Test", "New  ValueMoreData ");
+it('Word Diff', function() {
+  var diffResult = diff.diffWords("New :Value:Test", "New  ValueMoreData ");
   assert.equal(
     "New  <ins>ValueMoreData </ins><del>:Value:Test</del>",
     diff.convertChangesToXML(diffResult),
@@ -43,11 +43,11 @@ exports['Word Diff'] = function() {
     "New  Value<ins>:MoreData </ins>",
     diff.convertChangesToXML(diffResult),
     "Word boundary diffResult Value");
-};
+});
 
 // Diff without changes
-exports['Diff without changes'] = function() {
-  diffResult = diff.diffWords("New Value", "New Value");
+it('Diff without changes', function() {
+  var diffResult = diff.diffWords("New Value", "New Value");
   assert.equal(
     "New Value",
     diff.convertChangesToXML(diffResult),
@@ -62,11 +62,11 @@ exports['Diff without changes'] = function() {
     "",
     diff.convertChangesToXML(diffResult),
     "Empty no changes diffResult Value");
-};
+});
 
 // Empty diffs
-exports['Empty diffs'] = function() {
-  diffResult = diff.diffWords("New Value", "");
+it('Empty diffs', function() {
+  var diffResult = diff.diffWords("New Value", "");
   assert.equal(1, diffResult.length, "Empty diff result length");
   assert.equal(
     "<del>New Value</del>",
@@ -77,20 +77,20 @@ exports['Empty diffs'] = function() {
     "<ins>New Value</ins>",
     diff.convertChangesToXML(diffResult),
     "Empty diffResult Value");
-};
+});
 
 // With without anchor (the Heckel algorithm error case)
-exports['No anchor'] = function() {
-  diffResult = diff.diffWords("New Value New Value", "Value Value New New");
-  assert.eql(
+it('No anchor', function() {
+  var diffResult = diff.diffWords("New Value New Value", "Value Value New New");
+  assert.equal(
     "<ins>Value</ins><del>New</del> Value New <ins>New</ins><del>Value</del>",
     diff.convertChangesToXML(diffResult),
     "No anchor diffResult Value");
-};
+});
 
 // CSS Diff
-exports['CSS diffs'] = function() {
-  diffResult = diff.diffCss(
+it('CSS diffs', function() {
+  var diffResult = diff.diffCss(
     ".test,#value .test{margin-left:50px;margin-right:-40px}",
     ".test2, #value2 .test {\nmargin-top:50px;\nmargin-right:-400px;\n}");
   assert.equal(
@@ -99,11 +99,11 @@ exports['CSS diffs'] = function() {
     + "margin-right:<ins>-400px;\n</ins><del>-40px</del>}",
     diff.convertChangesToXML(diffResult),
     "CSS diffResult Value");
-};
+});
 
 // Line Diff
-exports['Line diffs'] = function() {
-  diffResult = diff.diffLines(
+it('Line diffs', function() {
+  var diffResult = diff.diffLines(
     "line\nold value\nline",
     "line\nnew value\nline");
   assert.equal(
@@ -126,11 +126,11 @@ exports['Line diffs'] = function() {
     "line\n<ins>value\n</ins><del>value \n</del>line",
     diff.convertChangesToXML(diffResult),
     "Line whitespace diffResult Value");
-};
+});
 
 // Patch creation with diff at EOF
-exports['lastLineChanged'] = function() {
-  assert.eql(
+it('lastLineChanged', function() {
+  assert.equal(
     'Index: test\n'
     + '===================================================================\n'
     + '--- test\theader1\n'
@@ -142,7 +142,7 @@ exports['lastLineChanged'] = function() {
     + ' line5\n',
     diff.createPatch('test', 'line2\nline3\nline5\n', 'line2\nline3\nline4\nline5\n', 'header1', 'header2'));
 
-  assert.eql(
+  assert.equal(
     'Index: test\n'
     + '===================================================================\n'
     + '--- test\theader1\n'
@@ -154,7 +154,7 @@ exports['lastLineChanged'] = function() {
     + '+line5\n',
     diff.createPatch('test', 'line2\nline3\nline4\n', 'line2\nline3\nline4\nline5\n', 'header1', 'header2'));
 
-  assert.eql(
+  assert.equal(
     'Index: test\n'
     + '===================================================================\n'
     + '--- test\theader1\n'
@@ -167,7 +167,7 @@ exports['lastLineChanged'] = function() {
     + '-line4\n',
     diff.createPatch('test', 'line1\nline2\nline3\nline4\n', 'line1\nline2\nline3\nline44\n', 'header1', 'header2'));
 
-  assert.eql(
+  assert.equal(
     'Index: test\n'
     + '===================================================================\n'
     + '--- test\theader1\n'
@@ -180,10 +180,10 @@ exports['lastLineChanged'] = function() {
     + '+line5\n'
     + '-line4\n',
     diff.createPatch('test', 'line1\nline2\nline3\nline4\n', 'line1\nline2\nline3\nline44\nline5\n', 'header1', 'header2'));
-};
+});
 
-exports['EOFNL'] = function() {
-  assert.eql(
+it('EOFNL', function() {
+  assert.equal(
     'Index: test\n'
     + '===================================================================\n'
     + '--- test\theader1\n'
@@ -197,7 +197,7 @@ exports['EOFNL'] = function() {
     + '-line4\n',
     diff.createPatch('test', 'line1\nline2\nline3\nline4\n', 'line1\nline2\nline3\nline4', 'header1', 'header2'));
 
-  assert.eql(
+  assert.equal(
     'Index: test\n'
     + '===================================================================\n'
     + '--- test\theader1\n'
@@ -211,7 +211,7 @@ exports['EOFNL'] = function() {
     + '\\ No newline at end of file\n',
     diff.createPatch('test', 'line1\nline2\nline3\nline4', 'line1\nline2\nline3\nline4\n', 'header1', 'header2'));
 
-  assert.eql(
+  assert.equal(
     'Index: test\n'
     + '===================================================================\n'
     + '--- test\theader1\n'
@@ -225,7 +225,7 @@ exports['EOFNL'] = function() {
     + '\\ No newline at end of file\n',
     diff.createPatch('test', 'line11\nline2\nline3\nline4', 'line1\nline2\nline3\nline4', 'header1', 'header2'));
 
-  assert.eql(
+  assert.equal(
     'Index: test\n'
     + '===================================================================\n'
     + '--- test\theader1\n'
@@ -238,9 +238,9 @@ exports['EOFNL'] = function() {
     + ' line4\n'
     + ' line4\n',
     diff.createPatch('test', 'line11\nline2\nline3\nline4\nline4\nline4\nline4', 'line1\nline2\nline3\nline4\nline4\nline4\nline4', 'header1', 'header2'));
-};
+});
 
-exports['Large Test'] = function() {
+it('Large Test', function() {
   var random = 42;
   var mult = 134775813, range = Math.pow(2, 32);
   function nextRandom() {
@@ -449,7 +449,7 @@ exports['Large Test'] = function() {
   }
   log("len: " + len + " count: " + count + " removed ( " + logData.join(", ") + " )");
 
-  diffResult = diff.diffWords(largeTest, largeNewValue);
+  var diffResult = diff.diffWords(largeTest, largeNewValue);
   log("diffResult length: " + diffResult.length);
   var removeCount = 0;
   var removeChanges = [], addChanges = [], testChanges = [];
@@ -470,9 +470,9 @@ exports['Large Test'] = function() {
   log("diffResult remove length: " + removeCount);
   assert.equal(largeTest.replace(/s+/g, ""), removeChanges.join("").replace(/s+/g, ""), "New Diff results match");
   assert.equal(largeNewValue.replace(/s+/g, ""), addChanges.join("").replace(/s+/g, ""), "Old Diff results match");
-};
+});
 
-exports['Patch'] = function() {
+it('Patch', function() {
   // Create patch
   var oldFile =
     "value\n"
@@ -598,7 +598,7 @@ exports['Patch'] = function() {
     + " context\n"
     + "\\ No newline at end of file\n";
 
-  diffResult = diff.createPatch("testFileName", oldFile, newFile, "Old Header", "New Header");
+  var diffResult = diff.createPatch("testFileName", oldFile, newFile, "Old Header", "New Header");
   assert.equal(
     expectedResult,
     diffResult);
@@ -613,21 +613,21 @@ exports['Patch'] = function() {
     expectedResult,
     diffResult,
     "Patch same diffResult Value");
-};
+});
 
-exports['convertToDMP'] = function() {
-    diffResult = diff.diffWords("New Value  ", "New  ValueMoreData ");
+it('convertToDMP', function() {
+    var diffResult = diff.diffWords("New Value  ", "New  ValueMoreData ");
 
     assert.deepEqual(
         [[0,'New  '],[1,'ValueMoreData'],[-1,'Value'],[0,' ']],
         diff.convertChangesToDMP(diffResult),
         "DMP conversion of diffResult");
-};
+});
 
 
 
 
-exports['lastLineChangedMergeTest'] = function() {
+it('lastLineChangedMergeTest', function() {
   assert.equal(
      'line2\n'+
      'line3\n'+
@@ -687,9 +687,9 @@ exports['lastLineChangedMergeTest'] = function() {
      + '+line44\n'
      + '+line5\n'
      + '-line4\n'));
-};
+});
 
-exports['EOFNLMergeTest'] = function() {
+it('EOFNLMergeTest', function() {
   assert.equal('line1\nline2\nline3\nline4',
      diff.applyPatch('line1\nline2\nline3\nline4\n',
      'Index: test\n'
@@ -745,9 +745,9 @@ exports['EOFNLMergeTest'] = function() {
      + ' line3\n'
      + ' line4\n'
      + ' line4\n'));
-};
+});
 
-exports['PatchMerge'] = function() {
+it('PatchMerge', function() {
   // Create patch
   var oldFile =
     "value\n"
@@ -887,4 +887,4 @@ exports['PatchMerge'] = function() {
     diff.applyPatch(oldFile, diffFile),
     "Patch same diffResult Value");
 
-};
+});
