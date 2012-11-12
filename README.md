@@ -1,7 +1,6 @@
 # diff
 
-[![Build
-Status](https://secure.travis-ci.org/timoxley/jsdiff.png)](http://travis-ci.org/timoxley/jsdiff)
+[![Build Status](https://secure.travis-ci.org/timoxley/jsdiff.png)](http://travis-ci.org/timoxley/jsdiff)
 
 A text differencing component.
 
